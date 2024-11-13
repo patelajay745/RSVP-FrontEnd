@@ -1,14 +1,17 @@
 import { Suspense } from "react";
 import "./App.css";
-import Homepage from "./pages/HomePage";
-import { Route, Routes } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { routes } from "./routes";
+
+const router = createBrowserRouter(routes);
 
 const App: React.FC = () => {
   return (
     <Suspense fallback={<div>Loading</div>}>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-      </Routes>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </Suspense>
   );
 };
