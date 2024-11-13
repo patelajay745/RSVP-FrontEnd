@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
 import { NavItem } from "../types/navigation";
 import React from "react";
+import { useAuth } from "@/context/AuthContext";
+import { LogoutBtn } from "./LogoutBtn";
 
 const Navbar: React.FC = () => {
+  const { isAuthenticated } = useAuth();
+
   const NAV_ITEMS: NavItem[] = [
     { name: "Home", slug: "/", active: true },
-    { name: "Dashboard", slug: "/dashboard", active: true },
-    { name: "Login", slug: "/login", active: true },
-    { name: "Signup", slug: "/signup", active: true },
+    { name: "Dashboard", slug: "/dashboard", active: isAuthenticated },
+    { name: "Login", slug: "/login", active: !isAuthenticated },
+    { name: "Signup", slug: "/signup", active: !isAuthenticated },
   ];
 
   return (
@@ -34,6 +38,8 @@ const Navbar: React.FC = () => {
               </Link>
             ) : null
           )}
+
+          {isAuthenticated && <LogoutBtn />}
         </nav>
       </div>
     </header>

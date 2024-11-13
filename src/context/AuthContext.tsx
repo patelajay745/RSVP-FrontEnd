@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContextType, User } from "../types/auth";
+import { useApi } from "@/services/api";
 
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
@@ -7,16 +8,27 @@ const AuthContext = createContext<AuthContextType>({
   isLoading: true,
   checkAuth: async () => {},
   logout: async () => {},
+  login: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const api = useApi();
 
   const checkAuth = async () => {
     try {
       setIsLoading(true);
+
+      console.log("Checking auth");
+
+      const result = await api.checkAuth();
+
+      if (result.data.user) {
+        setIsAuthenticated(true);
+        setUser(result.data.user);
+      }
     } catch (error) {
       console.log("Eroor while checking auth:", error);
     } finally {
@@ -24,7 +36,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const logout = async () => {};
+  const logout = async () => {
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
+  const login = async (userData: User) => {
+    setUser(userData);
+    setIsAuthenticated(true);
+  };
 
   useEffect(() => {
     checkAuth();
@@ -32,7 +52,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, isLoading, checkAuth, logout }}
+      value={{
+        isAuthenticated,
+        user,
+        isLoading,
+        checkAuth,
+        logout,
+        login,
+      }}
     >
       {children}
     </AuthContext.Provider>

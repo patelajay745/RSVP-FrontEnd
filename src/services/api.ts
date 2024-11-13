@@ -1,8 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { LoginDataType } from "../types/api";
 
-console.log(import.meta.env.VITE_API_URL);
-
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
@@ -12,10 +10,8 @@ const api = axios.create({
 });
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => response.data,
   (error: AxiosError) => {
-    console.log("Error(Code) in Response:", error.response?.status);
-    console.log("Error in Response:", error);
     return Promise.reject(error);
   }
 );
@@ -30,6 +26,9 @@ export const useApi = () => {
         Object.entries(data).map(([key, value]) => [key, String(value)])
       );
       return await api.post("/login", formData);
+    },
+    getLogout: async () => {
+      return await api.post("/logout");
     },
   };
 };

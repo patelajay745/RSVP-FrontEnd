@@ -10,21 +10,21 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { InlineSpinner } from "@/components/ui/LoadingSpinner";
+import { useAuth } from "@/context/AuthContext";
 import { useApi } from "@/services/api";
 import { Label } from "@radix-ui/react-label";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const LoginPage: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const api = useApi();
+  const { login: setLogin } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
     console.log(data);
@@ -33,9 +33,14 @@ export const LoginPage: React.FC = () => {
     try {
       const result = await api.getLogin(data);
 
-      console.log(result);
+      if (result.data) {
+        setLogin(result.data.user);
+        navigate("/dashboard");
+      }
     } catch (error) {
-      console.log(error);
+      error instanceof AxiosError
+        ? setError(error.response?.data?.message)
+        : console.log(error);
     } finally {
       setIsLoading(false);
     }
