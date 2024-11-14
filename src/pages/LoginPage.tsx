@@ -101,7 +101,7 @@ export const LoginPage: React.FC = () => {
           >
             Forgot password?
           </Link>
-          <Link to="/register" className="text-sm text-primary hover:underline">
+          <Link to="/signup" className="text-sm text-primary hover:underline">
             Don't have an account? Sign up
           </Link>
         </CardFooter>

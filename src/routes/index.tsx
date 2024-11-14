@@ -4,6 +4,8 @@ import { ErrorPage } from "../pages/ErrorPage";
 import HomePage from "../pages/HomePage";
 import { LoginPage } from "../pages/LoginPage";
 import { DashBoardPage } from "@/pages/DashBoardPage";
+import { SignupPage } from "@/pages/SignupPage";
+import WelcomeDashboard from "@/pages/WelcomePage";
 
 export const routes: RouteObject[] = [
   {
@@ -22,6 +24,14 @@ export const routes: RouteObject[] = [
       {
         path: "/dashboard",
         element: <DashBoardPage />,
+      },
+      {
+        path: "/signup",
+        element: <SignupPage />,
+      },
+      {
+        path: "/welcome",
+        element: <WelcomeDashboard />,
       },
     ],
   },

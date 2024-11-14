@@ -62,11 +62,6 @@ const Navbar: React.FC = () => {
                   theme === "dark" ? "-rotate-90 scale-0" : "rotate-0 scale-100"
                 }`}
               />
-              <span className="sr-only">
-                {theme === "light"
-                  ? "Switch to dark theme"
-                  : "Switch to light theme"}
-              </span>
             </Button>
           </nav>
         </div>
