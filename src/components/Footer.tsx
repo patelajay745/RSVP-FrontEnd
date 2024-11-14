@@ -2,9 +2,9 @@ import React from "react";
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-800 text-white py-6 h-1/10">
-      <div className="container mx-auto px-4 text-center">
-        <p>© 2024 All Rights Reserved</p>
+    <footer className=" w-full border-t border-border  backdrop-blur supports-[backdrop-filter]:bg-background/60 flex justify-center items-center">
+      <div className=" text-center container flex  items-center justify-center space-y-1 py-6 md:h-16  md:justify-center md:space-y-0 md:py-0">
+        © 2024 All Rights Reserved
       </div>
     </footer>
   );

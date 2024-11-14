@@ -9,15 +9,23 @@ const Layout: React.FC = () => {
   const { isLoading } = useAuth();
   if (!isLoading) {
     return (
-      <div className="min-h-screen flex flex-col bg-gray-100">
-        <Navbar />
-        <Outlet />
-
+      <div className="min-h-screen flex flex-col bg-background">
+        <div className="flex flex-col flex-1">
+          <Navbar />
+          <main className="flex-1 flex">
+            <Outlet />
+          </main>
+        </div>
         <Footer />
       </div>
     );
   } else {
-    return <Progress className="flex items-center justify-center" value={33} />;
+    return (
+      <Progress
+        className="flex items-center justify-center w-auto bg-blue-500"
+        value={33}
+      />
+    );
   }
 };
 
