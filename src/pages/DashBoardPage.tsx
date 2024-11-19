@@ -28,14 +28,25 @@ export const DashBoardPage: React.FC = () => {
           <span>
             Check your inbox for the verification link to unlock all features.
           </span>
-          <Button
-            variant="outline"
-            onClick={handleResendEmail}
-            disabled={resendingEmail}
-            className="dark:bg-background"
-          >
-            {resendingEmail ? "Sending..." : "Resend Email"}
-          </Button>
+
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={handleResendEmail}
+              disabled={resendingEmail}
+              className="dark:bg-background"
+            >
+              {resendingEmail ? "Sending..." : "Verify Email"}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleResendEmail}
+              disabled={resendingEmail}
+              className="dark:bg-background"
+            >
+              {resendingEmail ? "Sending..." : "Resend Email"}
+            </Button>
+          </div>
         </AlertDescription>
       </Alert>
 
