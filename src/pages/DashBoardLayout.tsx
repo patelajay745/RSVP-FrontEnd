@@ -1,22 +1,22 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
-import { Footer } from "../components/Footer";
 import { useAuth } from "@/context/AuthContext";
 import { Progress } from "@/components/ui/progress";
+import ProfileNavbar from "@/components/ProfileNavbar";
 
-const Layout: React.FC = () => {
+const DashBoardLayout: React.FC = () => {
   const { isLoading } = useAuth();
+
   if (!isLoading) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <div className="flex flex-col flex-1">
-          <Navbar />
+          <ProfileNavbar />
+
           <main className="flex-1 flex">
             <Outlet />
           </main>
         </div>
-        <Footer />
       </div>
     );
   } else {
@@ -31,4 +31,4 @@ const Layout: React.FC = () => {
   }
 };
 
-export default Layout;
+export default DashBoardLayout;

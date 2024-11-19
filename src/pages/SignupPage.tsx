@@ -12,15 +12,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const SignupPage: React.FC = () => {
   const { register, handleSubmit } = useForm();
-  const navigate = useNavigate();
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (data: any) => {};
+  const [error, _setError] = useState("");
+  const [isLoading, _setIsLoading] = useState(false);
+
+  const onSubmit = async (_data: any) => {};
 
   return (
     <div className="flex-grow flex items-center justify-center">

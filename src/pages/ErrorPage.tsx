@@ -8,12 +8,13 @@ export const ErrorPage: React.FC = () => {
     return;
   }
   return (
-    <div id="error-page">
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-      <p>
-        <i>{error.statusText || error.message}</i>
-      </p>
+    <div
+      id="error-page"
+      className="flex min-h-screen items-center  justify-center flex-col "
+    >
+      <h1>404 | Not Found</h1>
+
+      <i>{error.statusText || error.message}</i>
     </div>
   );
 };

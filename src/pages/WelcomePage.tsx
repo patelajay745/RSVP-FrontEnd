@@ -1,5 +1,5 @@
 import React from "react";
-import { Bell, Mail, Settings, UserCircle } from "lucide-react";
+import { Bell, Mail, UserCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {

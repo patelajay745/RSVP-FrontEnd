@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
       <section id="features" className="mt-16">
         <h2 className="text-2xl font-bold text-foreground mb-8">Features</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card>
+          <Card className="shadow-2xl">
             <CardHeader>
               <CardTitle className="text-foreground">Customize</CardTitle>
             </CardHeader>
@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="shadow-2xl">
             <CardHeader>
               <CardTitle className="text-foreground">Control</CardTitle>
             </CardHeader>
@@ -46,7 +46,7 @@ const HomePage: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="shadow-2xl">
             <CardHeader>
               <CardTitle className="text-foreground">Automate</CardTitle>
             </CardHeader>

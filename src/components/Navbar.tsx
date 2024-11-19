@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border">
+    <header className="sticky top-0 z-50 w-full border-b border-border  border-black dark:border-white">
       <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <Link to="/" className="flex items-center">
@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
             {NAV_ITEMS.map((item) =>
               item.active ? (
                 <Link
-                  className="text-sm font-medium text-foreground transition-colors hover:text-primary"
+                  className="font-medium text-foreground transition-colors hover:text-primary"
                   key={item.name}
                   to={item.slug}
                 >

@@ -6,6 +6,7 @@ import { LoginPage } from "../pages/LoginPage";
 import { DashBoardPage } from "@/pages/DashBoardPage";
 import { SignupPage } from "@/pages/SignupPage";
 import WelcomeDashboard from "@/pages/WelcomePage";
+import DashBoardLayout from "@/pages/DashBoardLayout";
 
 export const routes: RouteObject[] = [
   {
@@ -21,10 +22,7 @@ export const routes: RouteObject[] = [
         path: "/login",
         element: <LoginPage />,
       },
-      {
-        path: "/dashboard",
-        element: <DashBoardPage />,
-      },
+
       {
         path: "/signup",
         element: <SignupPage />,
@@ -32,6 +30,17 @@ export const routes: RouteObject[] = [
       {
         path: "/welcome",
         element: <WelcomeDashboard />,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <DashBoardLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "",
+        element: <DashBoardPage />,
       },
     ],
   },

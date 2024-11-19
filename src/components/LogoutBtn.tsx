@@ -22,7 +22,7 @@ export const LogoutBtn: React.FC = () => {
   };
   return (
     <button
-      className="text-gray-700 hover:text-gray-900 font-medium flex items-center"
+      className=" font-medium flex items-center text-black dark:text-white"
       onClick={logoutHandler}
       disabled={isLoading}
     >
