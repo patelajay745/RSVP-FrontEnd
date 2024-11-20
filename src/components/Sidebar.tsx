@@ -7,7 +7,11 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-function SideBar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
+interface SideBarProps {
+  isSidebarOpen: boolean;
+}
+
+const SideBar: React.FC<SideBarProps> = ({ isSidebarOpen }) => {
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
     {
@@ -21,9 +25,13 @@ function SideBar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
   ];
   return (
     <aside
-      className={`fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white dark:bg-background border-r w-64 transition-transform duration-200 ease-in-out ${
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-      } lg:translate-x-0`}
+      className={`
+        fixed top-[57px] left-0 z-40 h-[calc(100vh-57px)]
+        w-64 bg-background border-r border-border/40
+        transition-transform duration-200 ease-in-out
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
+        lg:${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
+      `}
     >
       <nav className="p-4 space-y-2">
         {menuItems.map((item) => (
@@ -39,6 +47,6 @@ function SideBar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
       </nav>
     </aside>
   );
-}
+};
 
 export default SideBar;

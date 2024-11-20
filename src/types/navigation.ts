@@ -3,3 +3,8 @@ export interface NavItem {
   slug: string;
   active: boolean;
 }
+
+export interface ProfileNavbarProps {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: (isOpen: boolean) => void;
+}

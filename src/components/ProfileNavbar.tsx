@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
-import { NavItem } from "../types/navigation";
-import React, { useState } from "react";
+import { NavItem, ProfileNavbarProps } from "../types/navigation";
+import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import { LogoutBtn } from "./LogoutBtn";
 import { Button } from "./ui/button";
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { Menu, Moon, Sun, X, PanelLeftClose } from "lucide-react";
 import { useTheme } from "./theme-provider";
-import SideBar from "./Sidebar";
 
-const ProfileNavbar: React.FC = () => {
+const ProfileNavbar: React.FC<ProfileNavbarProps> = ({
+  isSidebarOpen = false,
+  setIsSidebarOpen,
+}) => {
   const { isAuthenticated } = useAuth();
   const { setTheme, theme } = useTheme();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const NAV_ITEMS: NavItem[] = [
     { name: "Home", slug: "/", active: true },
@@ -25,14 +26,22 @@ const ProfileNavbar: React.FC = () => {
       <header className=" sticky top-0 z-50 w-full border-b border-border  border-black dark:border-white">
         <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className=" mx-auto px-4 py-3 flex justify-between items-center">
-            <Link to="/dashboard" className="flex items-center">
-              <img
-                src="./logo.png"
-                alt="RSVP"
-                loading="lazy"
-                className="h-10 dark:invert"
-              />
-            </Link>
+            <div className="flex items-center gap-14">
+              {isSidebarOpen ? (
+                <PanelLeftClose onClick={() => setIsSidebarOpen(false)} />
+              ) : (
+                <Menu onClick={() => setIsSidebarOpen(true)} />
+              )}
+
+              <Link to="/dashboard" className="flex items-center">
+                <img
+                  src="./logo.png"
+                  alt="RSVP"
+                  loading="lazy"
+                  className="h-10 dark:invert"
+                />
+              </Link>
+            </div>
 
             <div className="flex items-center">
               <button
@@ -83,8 +92,6 @@ const ProfileNavbar: React.FC = () => {
           </div>
         </div>
       </header>
-
-      <SideBar isSidebarOpen={isSidebarOpen} />
     </>
   );
 };

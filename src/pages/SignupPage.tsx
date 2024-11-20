@@ -10,39 +10,45 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/context/AuthContext";
 import { useApi } from "@/services/api";
 import { LoginDataType } from "@/types/api";
+import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const SignupPage: React.FC = () => {
   const { register, handleSubmit } = useForm();
   const api = useApi();
 
-  const [error, _setError] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingLogin, setIsLoadingLogin] = useState(false);
+  const { login: setLogin } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     setIsLoading(true);
 
     try {
       const result = await api.getSignup(data);
       if (result.data) {
-        console.log(result.data);
+        setIsLoading(false);
         setIsLoadingLogin(true);
         const loginData: LoginDataType = { email: "", password: "" };
         loginData.email = data.email;
         loginData.password = data.password;
         const loginResult = await api.getLogin(loginData);
         if (loginResult.data) {
-          console.log(loginResult.data);
+          setLogin(result.data.user);
+          navigate("/dashboard");
         }
       }
     } catch (error) {
-      console.log("Error while signup", error);
+      error instanceof AxiosError
+        ? setError(error.response?.data?.message)
+        : console.log(error);
     } finally {
       setIsLoadingLogin(false);
       setIsLoading(false);
@@ -104,7 +110,11 @@ export const SignupPage: React.FC = () => {
               </Alert>
             )}
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isLoading || isLoadingLogin}
+            >
               {isLoading ? (
                 <>
                   <svg
