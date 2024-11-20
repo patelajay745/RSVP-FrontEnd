@@ -8,7 +8,7 @@ export interface User {
 
 export interface AuthContextType {
   isAuthenticated: boolean;
-  user?: User | null;
+  user: User | null;
   isLoading: boolean;
   checkAuth: () => Promise<void>;
   logout: () => Promise<void>;

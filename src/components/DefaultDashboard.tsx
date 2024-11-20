@@ -9,17 +9,42 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useAuth } from "@/context/AuthContext";
+import { capitalizeFirstLetter } from "@/utils/StringOperations";
+import { useApi } from "@/services/api";
+import { toast, Toaster } from "sonner";
+import { EmailResponse } from "@/types/api";
 
 export const DefaultDashboard: FC = () => {
   const [resendingEmail, setResendingEmail] = useState(false);
+  const { user } = useAuth();
+  const firstName = user?.firstName;
+  const api = useApi();
 
   const handleResendEmail = async () => {
     setResendingEmail(true);
-    // TODO: Implement resend verification email logic
-    setTimeout(() => setResendingEmail(false), 2000);
+
+    try {
+      const result = (await api.sendVerifyEmail()) as unknown as EmailResponse;
+      if (result.message != "") {
+        console.log("reached");
+
+        toast.success("Verification Email has been sent");
+        // toast("Verification Email has been sent", {
+        //   description: "Please Check your inbox",
+        // });
+      }
+    } catch (error) {
+      toast.error("Something went wrong", {
+        description: "Please try again",
+      });
+    } finally {
+      setResendingEmail(false);
+    }
   };
   return (
     <div className="container mx-auto p-6  ">
+      <Toaster />
       <Alert className="mb-6 dark:border-amber-500/20 dark:bg-amber-500/10 border-amber-500 bg-amber-50">
         <Mail className="h-4 w-4" />
         <AlertTitle>Please verify your email address</AlertTitle>
@@ -32,10 +57,9 @@ export const DefaultDashboard: FC = () => {
             <Button
               variant="outline"
               onClick={handleResendEmail}
-              disabled={resendingEmail}
               className="dark:bg-background"
             >
-              {resendingEmail ? "Sending..." : "Verify Email"}
+              Verify Email
             </Button>
             <Button
               variant="outline"
@@ -49,17 +73,15 @@ export const DefaultDashboard: FC = () => {
         </AlertDescription>
       </Alert>
 
-     
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
-          Welcome to RSVP App! 👋
+          Welcome {capitalizeFirstLetter(firstName)} 👋
         </h1>
         <p className="text-muted-foreground mt-2">
           Let's get you started with managing your events.
         </p>
       </div>
 
-      
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
         <Card className="dark:border-muted/20">
           <CardHeader>
@@ -105,7 +127,6 @@ export const DefaultDashboard: FC = () => {
         </Card>
       </div>
 
-     
       <Card className="dark:border-muted/20">
         <CardHeader>
           <CardTitle>What you'll be able to do after verification</CardTitle>

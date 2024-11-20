@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Progress } from "@/components/ui/progress";
 import ProfileNavbar from "@/components/ProfileNavbar";
 import SideBar from "@/components/Sidebar";
 import { useLayout } from "@/context/LayoutContext";
+import { useWindowsSize } from "@/hooks/useWindowsSize";
 
 const DashBoardLayout: React.FC = () => {
   const { isLoading } = useAuth();
-  const { isSidebarOpen } = useLayout();
+  const { isSidebarOpen, closeSidebar, openSidebar } = useLayout();
+  const windowWidth = useWindowsSize();
+
+  useEffect(() => {
+    if (windowWidth < 1024) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  }, [windowWidth]);
 
   if (!isLoading) {
     return (
@@ -20,7 +30,7 @@ const DashBoardLayout: React.FC = () => {
           <div className="flex flex-1">
             {isSidebarOpen && <SideBar />}
             <main
-              className={`flex-1 p-4 transition-all duration-200 ease-in-out`}
+              className={`flex-1  p-4 transition-all duration-200 ease-in-out`}
             >
               <Outlet />
             </main>

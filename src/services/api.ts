@@ -36,5 +36,12 @@ export const useApi = () => {
     getAllEvents: async () => {
       return await api.get("event");
     },
+    sendVerifyEmail: async () => {
+      return await api.post(
+        "user/sendEmail",
+        {},
+        { validateStatus: () => true }
+      );
+    },
   };
 };
