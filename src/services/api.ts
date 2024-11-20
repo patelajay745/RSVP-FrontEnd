@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { LoginDataType } from "../types/api";
+import { LoginDataType, SignUpDataType } from "../types/api";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -29,6 +29,9 @@ export const useApi = () => {
     },
     getLogout: async () => {
       return await api.post("/logout");
+    },
+    getSignup: async (data: SignUpDataType) => {
+      return await api.post("user", data);
     },
   };
 };

@@ -10,17 +10,37 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useApi } from "@/services/api";
+import { LoginDataType } from "@/types/api";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 export const SignupPage: React.FC = () => {
   const { register, handleSubmit } = useForm();
+  const api = useApi();
 
   const [error, _setError] = useState("");
-  const [isLoading, _setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (_data: any) => {};
+  const onSubmit = async (data: any) => {
+    console.log(data);
+    setIsLoading(true);
+
+    try {
+      const result = await api.getSignup(data);
+      if (result.data) {
+        console.log(result.data);
+        const loginData: LoginDataType = { email: "", password: "" };
+        loginData.email = data.email;
+        loginData.password = data.password;
+      }
+    } catch (error) {
+      console.log("Error while signup", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex-grow flex items-center justify-center">
