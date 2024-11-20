@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
-import { NavItem, ProfileNavbarProps } from "../types/navigation";
+import { NavItem } from "../types/navigation";
 import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import { LogoutBtn } from "./LogoutBtn";
 import { Button } from "./ui/button";
 import { Menu, Moon, Sun, PanelLeftClose } from "lucide-react";
 import { useTheme } from "./theme-provider";
+import { useLayout } from "@/context/LayoutContext";
 
-const ProfileNavbar: React.FC<ProfileNavbarProps> = ({
-  isSidebarOpen = false,
-  setIsSidebarOpen,
-}) => {
+const ProfileNavbar: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const { setTheme, theme } = useTheme();
+  const { isSidebarOpen, openSidebar, closeSidebar } = useLayout();
 
   const NAV_ITEMS: NavItem[] = [
     { name: "Home", slug: "/", active: true },
@@ -28,9 +27,14 @@ const ProfileNavbar: React.FC<ProfileNavbarProps> = ({
           <div className=" mx-auto px-4 py-3 flex justify-between items-center">
             <div className="flex items-center gap-14">
               {isSidebarOpen ? (
-                <PanelLeftClose onClick={() => setIsSidebarOpen(false)} />
+                <PanelLeftClose
+                  onClick={() => {
+                    console.log("clicked to close");
+                    closeSidebar();
+                  }}
+                />
               ) : (
-                <Menu onClick={() => setIsSidebarOpen(true)} />
+                <Menu onClick={() => openSidebar()} />
               )}
 
               <Link to="/dashboard" className="flex items-center">

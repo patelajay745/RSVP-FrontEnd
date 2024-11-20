@@ -1,3 +1,4 @@
+import { useLayout } from "@/context/LayoutContext";
 import {
   LayoutDashboard,
   PlusCircle,
@@ -7,11 +8,8 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-interface SideBarProps {
-  isSidebarOpen: boolean;
-}
-
-const SideBar: React.FC<SideBarProps> = ({ isSidebarOpen }) => {
+const SideBar: React.FC = () => {
+  const { isSidebarOpen } = useLayout();
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
     {
@@ -25,8 +23,8 @@ const SideBar: React.FC<SideBarProps> = ({ isSidebarOpen }) => {
   ];
   return (
     <aside
-      className={`
-        fixed top-[57px] left-0 z-40 h-[calc(100vh-57px)]
+      className={` 
+        flex flex-col h-[calc(100vh-57px)]
         w-64 bg-background border-r border-border/40
         transition-transform duration-200 ease-in-out
         ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
@@ -38,7 +36,12 @@ const SideBar: React.FC<SideBarProps> = ({ isSidebarOpen }) => {
           <Link
             key={item.label}
             to={item.path}
-            className="flex items-center space-x-3 px-4 py-3 text-gray-700 dark:text-white rounded-lg hover:bg-gray-100 transition-colors"
+            className="flex items-center space-x-3 px-4 py-3  w-full 
+        text-gray-700 dark:text-gray-200 
+        rounded-lg 
+        hover:bg-gray-200 hover:text-gray-900
+        dark:hover:bg-gray-800 dark:hover:text-white 
+        transition-all duration-200"
           >
             <item.icon size={20} />
             <span className="font-medium">{item.label}</span>

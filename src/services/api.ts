@@ -33,5 +33,8 @@ export const useApi = () => {
     getSignup: async (data: SignUpDataType) => {
       return await api.post("user", data);
     },
+    getAllEvents: async () => {
+      return await api.get("event");
+    },
   };
 };

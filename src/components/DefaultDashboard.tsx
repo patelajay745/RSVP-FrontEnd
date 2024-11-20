@@ -20,7 +20,6 @@ export const DefaultDashboard: FC = () => {
   };
   return (
     <div className="container mx-auto p-6  ">
-      {/* Verification Alert */}
       <Alert className="mb-6 dark:border-amber-500/20 dark:bg-amber-500/10 border-amber-500 bg-amber-50">
         <Mail className="h-4 w-4" />
         <AlertTitle>Please verify your email address</AlertTitle>
@@ -50,7 +49,7 @@ export const DefaultDashboard: FC = () => {
         </AlertDescription>
       </Alert>
 
-      {/* Welcome Message */}
+     
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
           Welcome to RSVP App! 👋
@@ -60,7 +59,7 @@ export const DefaultDashboard: FC = () => {
         </p>
       </div>
 
-      {/* Quick Actions */}
+      
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
         <Card className="dark:border-muted/20">
           <CardHeader>
@@ -106,7 +105,7 @@ export const DefaultDashboard: FC = () => {
         </Card>
       </div>
 
-      {/* Feature Preview */}
+     
       <Card className="dark:border-muted/20">
         <CardHeader>
           <CardTitle>What you'll be able to do after verification</CardTitle>

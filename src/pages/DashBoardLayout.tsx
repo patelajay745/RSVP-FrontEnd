@@ -1,26 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Progress } from "@/components/ui/progress";
 import ProfileNavbar from "@/components/ProfileNavbar";
 import SideBar from "@/components/Sidebar";
+import { useLayout } from "@/context/LayoutContext";
 
 const DashBoardLayout: React.FC = () => {
   const { isLoading } = useAuth();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { isSidebarOpen } = useLayout();
 
   if (!isLoading) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <div className="flex flex-col flex-1">
-          <ProfileNavbar
-            isSidebarOpen={isSidebarOpen}
-            setIsSidebarOpen={setIsSidebarOpen}
-          />
-          <SideBar isSidebarOpen={isSidebarOpen} />
-          <main className="flex-1 flex">
-            <Outlet />
-          </main>
+          <div>
+            <ProfileNavbar />
+          </div>
+          <div className="flex flex-1">
+            {isSidebarOpen && <SideBar />}
+            <main
+              className={`flex-1 p-4 transition-all duration-200 ease-in-out`}
+            >
+              <Outlet />
+            </main>
+          </div>
         </div>
       </div>
     );
