@@ -4,7 +4,7 @@ import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import { LogoutBtn } from "./LogoutBtn";
 import { Button } from "./ui/button";
-import { Menu, Moon, Sun, X, PanelLeftClose } from "lucide-react";
+import { Menu, Moon, Sun, PanelLeftClose } from "lucide-react";
 import { useTheme } from "./theme-provider";
 
 const ProfileNavbar: React.FC<ProfileNavbarProps> = ({
@@ -41,15 +41,6 @@ const ProfileNavbar: React.FC<ProfileNavbarProps> = ({
                   className="h-10 dark:invert"
                 />
               </Link>
-            </div>
-
-            <div className="flex items-center">
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="p-2 rounded-md hover:bg-gray-100 lg:hidden"
-              >
-                {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
             </div>
 
             <nav className="flex items-center space-x-6">

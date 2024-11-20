@@ -7,7 +7,7 @@ import SideBar from "@/components/Sidebar";
 
 const DashBoardLayout: React.FC = () => {
   const { isLoading } = useAuth();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   if (!isLoading) {
     return (
@@ -30,8 +30,6 @@ const DashBoardLayout: React.FC = () => {
         className="flex items-center justify-center w-auto bg-blue-500"
         value={33}
       />
-
-      // <PageSpinner />
     );
   }
 };
