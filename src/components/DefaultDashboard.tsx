@@ -1,7 +1,13 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Bell, Mail, UserCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import {
   Card,
   CardContent,
@@ -14,12 +20,40 @@ import { capitalizeFirstLetter } from "@/utils/StringOperations";
 import { useApi } from "@/services/api";
 import { toast, Toaster } from "sonner";
 import { EmailResponse } from "@/types/api";
+import { useNavigate } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export const DefaultDashboard: FC = () => {
   const [resendingEmail, setResendingEmail] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [completedOtp, setCompletedOtp] = useState(false);
   const { user } = useAuth();
   const firstName = user?.firstName;
   const api = useApi();
+  const navigate = useNavigate();
+
+  const handleOTPChange = (value: string) => {
+    setOtp(value);
+  };
+
+  useEffect(() => {
+    if (otp.length >= 6) {
+      setCompletedOtp(true);
+      return;
+    }
+
+    setCompletedOtp(false);
+  }, [otp]);
 
   const handleResendEmail = async () => {
     setResendingEmail(true);
@@ -27,12 +61,7 @@ export const DefaultDashboard: FC = () => {
     try {
       const result = (await api.sendVerifyEmail()) as unknown as EmailResponse;
       if (result.message != "") {
-        console.log("reached");
-
         toast.success("Verification Email has been sent");
-        // toast("Verification Email has been sent", {
-        //   description: "Please Check your inbox",
-        // });
       }
     } catch (error) {
       toast.error("Something went wrong", {
@@ -54,13 +83,53 @@ export const DefaultDashboard: FC = () => {
           </span>
 
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={handleResendEmail}
-              className="dark:bg-background"
-            >
-              Verify Email
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">Verify Email</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px] ">
+                <DialogHeader>
+                  <DialogTitle>Verify Email</DialogTitle>
+                  <DialogDescription>
+                    Please enter the code , which hase been sent to your email.
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="flex items-center justify-center">
+                  <InputOTP
+                    value={otp}
+                    onChange={handleOTPChange}
+                    maxLength={6}
+                  >
+                    <InputOTPGroup>
+                      <InputOTPSlot index={0} />
+                      <InputOTPSlot index={1} />
+                      <InputOTPSlot index={2} />
+                    </InputOTPGroup>
+                    <InputOTPSeparator />
+                    <InputOTPGroup>
+                      <InputOTPSlot index={3} />
+                      <InputOTPSlot index={4} />
+                      <InputOTPSlot index={5} />
+                    </InputOTPGroup>
+                  </InputOTP>
+                </div>
+                <DialogFooter>
+                  <Button
+                    onClick={() => {
+                      console.log("clecked");
+                      setOtp("");
+                    }}
+                  >
+                    Clear
+                  </Button>
+                  <Button disabled={!completedOtp} type="submit">
+                    Verify
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
             <Button
               variant="outline"
               onClick={handleResendEmail}
